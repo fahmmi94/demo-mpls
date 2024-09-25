@@ -1,0 +1,219 @@
+1. Management Script
+====================
+-------------
+R1# For getting IP from my home internet
+-------------
+en
+conf t
+hostname R1
+int f0/0  # Configuring interface f0/0
+ip address dhcp  # Set IP address via DHCP
+no shut  # Enable interface
+end
+-------------
+
+Configurations
+====================
+-------------
+R1#
+-------------
+en
+conf t
+hostname R1  # Setting hostname to R1
+no ip domain-lookup  # Disabling domain lookup
+no cdp run  # Disabling Cisco Discovery Protocol
+
+!
+# Configuring interface f6/0 with static IP
+int f6/0
+ip address 192.168.223.111 255.255.255.0  # Assigning static IP
+no shut  # Enabling interface
+duplex full  # Setting full duplex
+!
+!
+# Configuring SSH for secure access
+ip domain-name ciscopython.com  # Setting domain name for SSH
+crypto key generate rsa # Generating RSA keys for encryption
+1024
+!
+username admin privilege 15 secret cisco  # Creating user with privileged access
+ip ssh version 2  # Enabling SSH version 2
+!
+# Configuring vty lines for remote access
+line vty 0 15
+login local
+transport input all
+exit
+!
+end
+wr # Save the configuration
+!
+
+-------------
+R2#
+-------------
+en
+conf t
+hostname R2
+no ip domain-lookup
+!
+int f6/0
+ip address 192.168.223.112 255.255.255.0
+no shut
+duplex full
+!
+!
+ip domain-name ciscopython.com
+crypto key generate rsa 
+1024
+!
+username admin privilege 15 secret cisco
+ip ssh version 2
+!
+line vty 0 15
+login local
+transport input all
+exit
+!
+end
+wr
+!
+
+-------------
+R3#
+-------------
+en
+conf t
+hostname R3
+no ip domain-lookup
+!
+int f6/0
+ip address 192.168.223.113 255.255.255.0
+no shut
+duplex full
+!
+!
+ip domain-name ciscopython.com
+crypto key generate rsa 
+1024
+!
+username admin privilege 15 secret cisco
+ip ssh version 2
+!
+line vty 0 15
+login local
+transport input all
+exit
+!
+end
+wr
+!
+
+-------------
+R4#
+-------------
+en
+conf t
+hostname R4
+no ip domain-lookup
+!
+int f6/0
+ip address 192.168.223.114 255.255.255.0
+no shut
+duplex full
+!
+!
+ip domain-name ciscopython.com
+crypto key generate rsa 
+1024
+!
+username admin privilege 15 secret cisco
+ip ssh version 2
+!
+line vty 0 15
+login local
+transport input all
+exit
+!
+end
+wr
+!
+
+-------------
+PE-1#
+-------------
+en
+conf t
+hostname PE-1
+no ip domain-lookup
+!
+int f6/0
+ip address 192.168.223.115 255.255.255.0
+no shut
+duplex full
+!
+!
+ip domain-name ciscopython.com
+crypto key generate rsa 
+1024
+!
+username admin privilege 15 secret cisco
+ip ssh version 2
+!
+line vty 0 15
+login local
+transport input all
+exit
+!
+end
+wr
+!
+
+-------------
+PE-2#
+-------------
+en
+conf t
+hostname PE-2
+no ip domain-lookup
+!
+int f6/0
+ip address 192.168.223.116 255.255.255.0
+no shut
+duplex full
+!
+!
+ip domain-name ciscopython.com
+crypto key generate rsa 
+1024
+!
+username admin privilege 15 secret cisco
+ip ssh version 2
+!
+line vty 0 15
+login local
+transport input all
+exit
+!
+end
+wr
+!
+
+=================================
+For all routers
+=================================
+!!!---Set password for console access---!!!
+en
+conf t
+!
+line console 0
+password Maheer
+login
+exit
+!
+exit
+wr
+!
+exit
+!
+====================

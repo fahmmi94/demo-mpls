@@ -1,0 +1,94 @@
+5. CE-to-PE Connections
+========================= 
+------------------
+CE-1
+------------
+en
+conf t
+host CE-1
+!
+int f0/0
+ip address 172.10.1.1 255.255.255.252
+no shut
+!
+exit
+ip route 0.0.0.0 0.0.0.0 172.10.1.2
+!
+end
+!
+wr
+!
+
+------------------
+CE-2
+------------
+en
+conf t
+host CE-2
+!
+int f0/0
+ip address 172.20.2.1 255.255.255.252
+no shut
+!
+exit
+ip route 0.0.0.0 0.0.0.0 172.20.2.2
+!
+end
+!
+wr
+!
+
+
+------------------
+PE-1
+------------
+en
+conf t
+ip vrf CUST_VRF
+ rd 1:10
+ route-target export 1:10
+ route-target import 1:10
+exit
+
+int f0/0
+ip vrf forwarding CUST_VRF
+ip address 172.10.1.2 255.255.255.252
+no shut
+!
+router bgp 1
+  address-family ipv4 vrf CUST_VRF
+    redistribute connected
+  exit-address-family
+!
+!
+end
+!
+wr
+!
+
+------------------
+PE-2
+------------
+en
+conf t
+ip vrf CUST_VRF
+ rd 1:10
+ route-target export 1:10
+ route-target import 1:10
+exit
+!
+int f0/0
+ip vrf forwarding CUST_VRF
+ip address 172.20.2.2 255.255.255.252
+no shut
+!
+router bgp 1
+  address-family ipv4 vrf CUST_VRF
+    redistribute connected
+  exit-address-family
+!
+!
+end
+!
+wr
+!
