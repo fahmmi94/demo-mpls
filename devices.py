@@ -1,4 +1,4 @@
-#Storing details of all network devices
+#Storing details of all network device
 devices = {
     'R1': {
         'device_type': 'cisco_ios', # Device type for Netmiko connection
